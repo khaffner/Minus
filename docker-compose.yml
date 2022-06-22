@@ -14,7 +14,6 @@ services:
       - /home/minus/logs/gps:/gps
   #################################################  
   homeassistant:
-    container_name: HomeAssistant
     network_mode: host
     restart: unless-stopped
     environment:
