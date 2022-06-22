@@ -1,0 +1,58 @@
+version: '3'
+services:
+  #################################################  
+  gps:
+    restart: unless-stopped
+    devices:
+      - /dev/serial0:/dev/gps # Consider device by ID
+    environment:
+      - TZ=Europe/Oslo
+    build:
+      context: ./gps
+      dockerfile: Dockerfile
+    volumes:
+      - /home/minus/logs/gps:/gps
+  #################################################  
+  homeassistant:
+    container_name: HomeAssistant
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Oslo
+    volumes:
+      - /home/minus/homeassistant_config:/config
+  #################################################
+  obd:
+    restart: unless-stopped
+    devices:
+      - '/dev/ttyAMA0:/dev/obd'
+    environment:
+      - TZ=Europe/Oslo
+    build:
+      context: ./obd
+      dockerfile: Dockerfile
+    volumes:
+      - /home/minus/logs/obd:/obd
+  #################################################
+  rclone:
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Oslo
+    build:
+      context: ./gps
+      dockerfile: Dockerfile
+    volumes:
+      - /home/minus/.config/rclone:/config/rclone # Must be configured on host
+      - /home/minus/logs:/logs
+  #################################################
+  portainer-ce:
+    restart: unless-stopped
+    image: portainer/portainer-ce:latest
+    environment:
+      - TZ=Europe/Oslo
+    ports:
+      - '8000:8000'
+      - '9000:9000'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '/home/minus/portainer_data:/data'
