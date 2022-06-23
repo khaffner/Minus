@@ -21,6 +21,7 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - /home/minus/homeassistant_config:/config
+      - /home/minus/logs:/logs:RO
   #################################################
   obd:
     restart: unless-stopped
@@ -66,3 +67,14 @@ services:
       - '8080:8080'
     devices:
       - '/dev/hidraw0'
+  #################################################
+  glances:
+    image: nicolargo/glances:3.2.4.2 # https://github.com/home-assistant/core/issues/70373. Switch back to latest when issue is resolved
+    restart: unless-stopped
+    pid: host
+    ports:
+      - '61208:61208'
+    environment:
+      - GLANCES_OPT=-w
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
