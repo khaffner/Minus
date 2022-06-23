@@ -21,7 +21,7 @@ services:
       - TZ=Europe/Oslo
     volumes:
       - /home/minus/homeassistant_config:/config
-      - /home/minus/logs:/logs:RO
+      - /home/minus/logs:/logs
   #################################################
   obd:
     restart: unless-stopped
