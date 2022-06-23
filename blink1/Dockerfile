@@ -1,6 +1,6 @@
 # https://github.com/todbot/node-blink1-server/blob/master/dockerfile
 
-FROM node:18.4-alpine
+FROM node:8.16.1-alpine
 
 # add necessary usb libraries
 RUN apk add --update --quiet libusb libusb-dev eudev-dev git
@@ -13,6 +13,9 @@ RUN npm install --silent -g node-blink1-server
 
 # cleanup
 RUN apk del --quiet .gyp git && rm -rf /var/cache/apk
+
+# Workaround, https://github.com/npm/uid-number/issues/3#issuecomment-287413039
+RUN npm config set unsafe-perm true
 
 EXPOSE 8080
 
