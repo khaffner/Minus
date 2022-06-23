@@ -1,6 +1,6 @@
 # https://github.com/todbot/node-blink1-server/blob/master/dockerfile
 
-FROM node:8.16.1-alpine
+FROM node:18.4-alpine
 
 # add necessary usb libraries
 RUN apk add --update --quiet libusb libusb-dev eudev-dev git
