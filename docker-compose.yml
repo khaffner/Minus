@@ -39,7 +39,7 @@ services:
     environment:
       - TZ=Europe/Oslo
     build:
-      context: ./gps
+      context: ./rclone
       dockerfile: Dockerfile
     volumes:
       - /home/minus/.config/rclone:/config/rclone # Must be configured on host
