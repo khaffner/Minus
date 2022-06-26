@@ -1,0 +1,22 @@
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+device_tracker:
+  - platform: bluetooth_tracker
+
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: processor_temperature
+      - type: processor_use
