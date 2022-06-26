@@ -10,6 +10,9 @@ sudo usermod -aG docker minus
 # Docker Compose, https://dev.to/elalemanyo/how-to-install-docker-and-docker-compose-on-raspberry-pi-1mo
 sudo apt-get install libffi-dev libssl-dev && sudo apt install python3-dev && sudo apt-get install -y python3 python3-pip && sudo pip3 install docker-compose
 
+# GPSD, remember to edit /etc/default/gpsd
+sudo apt install gpsd -y
+
 # https://ozzmaker.com/berrygps-setup-guide-raspberry-pi/
 # Disable serial console, keep serial enabled. Reboot
 

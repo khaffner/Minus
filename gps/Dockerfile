@@ -1,10 +1,7 @@
 FROM debian:bullseye-slim
 
 # Install required software
-RUN apt-get update && apt-get install gpsd gpsd-clients -y && rm -rf /var/lib/apt/lists/*
-
-# Set config
-COPY gpsd /etc/default/gpsd
+RUN apt-get update && apt-get install gpsd-clients -y && rm -rf /var/lib/apt/lists/*
 
 # Copy script
 COPY logger.sh /app/logger.sh

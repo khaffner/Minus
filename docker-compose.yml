@@ -3,8 +3,7 @@ services:
   #################################################  
   gps:
     restart: unless-stopped
-    devices:
-      - /dev/serial0:/dev/gps
+    network_mode: host # couldn't pass just port 2947.. 
     environment:
       - TZ=Europe/Oslo
     build:
