@@ -4,7 +4,7 @@ services:
   gps:
     restart: unless-stopped
     devices:
-      - /dev/serial0:/dev/gps # Consider device by ID
+      - /dev/serial0:/dev/gps
     environment:
       - TZ=Europe/Oslo
     build:
