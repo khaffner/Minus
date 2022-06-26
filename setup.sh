@@ -13,6 +13,9 @@ sudo apt-get install libffi-dev libssl-dev && sudo apt install python3-dev && su
 # https://ozzmaker.com/berrygps-setup-guide-raspberry-pi/
 # Disable serial console, keep serial enabled. Reboot
 
+# SWAP https://askubuntu.com/questions/103915/how-do-i-configure-swappiness
+sudo bash -c "echo 'vm.swappiness = 1' >> /etc/sysctl.conf"
+
 # Clone project repo, lowercase repo
 git clone https://github.com/khaffner/Minus.git
 mv Minus/ minus/
