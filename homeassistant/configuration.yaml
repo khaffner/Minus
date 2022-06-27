@@ -9,10 +9,12 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-device_tracker:
-  - platform: bluetooth_tracker
+recorder:
+  purge_keep_days: 30
+  commit_interval: 60
 
 sensor:
+  - platform: gpsd
   - platform: systemmonitor
     resources:
       - type: disk_use_percent
@@ -20,3 +22,10 @@ sensor:
       - type: swap_use_percent
       - type: processor_temperature
       - type: processor_use
+
+binary_sensor:
+  - platform: ping
+    host: 8.8.8.8
+    name: "Internet"
+    count: 4
+    scan_interval: 10
