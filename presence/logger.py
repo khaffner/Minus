@@ -3,11 +3,9 @@ import time
 from datetime import datetime
 import os
 
-print("Declaring function")
-
 
 def log_presence(name):
-    # Log which button is pressed, in a way that a script can easily look up which button is currently pressed.
+    # Log which button is pressed, also in a way that a script can easily look up which button is currently pressed.
     print(name)  # Just for debuggings sake
     now = datetime.now()
     date = now.strftime("%Y-%m-%d")
