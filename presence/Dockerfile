@@ -1,8 +1,8 @@
-FROM python:3.9-slim-bullseye
+# https://github.com/gpiozero/gpiozero/issues/891
+FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install build-essential RPi.GPIO -y
-RUN pip3 install rpi.gpio
-RUN pip3 install gpiozero
+RUN apt-get update && apt-get install -y libsystemd-dev python3.5 python3-dev python3-pip
+RUN pip3 install pystemd gpiozero
 
 COPY logger.py /app/logger.py
 
