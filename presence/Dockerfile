@@ -1,6 +1,6 @@
 FROM python:3.9-slim-bullseye
 
-RUN apt-get update && apt-get install RPi.GPIO -y
+RUN apt-get update && apt-get install build-essential RPi.GPIO -y
 RUN pip3 install rpi.gpio
 RUN pip3 install gpiozero
 
