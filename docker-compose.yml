@@ -54,5 +54,4 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /home/minus/logs:/logs
-    devices:
-      - /dev/gpiomem
+      - /sys:/sys # For GPIO
