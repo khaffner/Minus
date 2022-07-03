@@ -1,4 +1,4 @@
-FROM python:3-slim-bullseye
+FROM python:3.9-slim-bullseye
 
 RUN apt-get update && apt-get install RPi.GPIO -y
 RUN pip3 install gpiozero
