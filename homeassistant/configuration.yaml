@@ -10,7 +10,7 @@ script: !include scripts.yaml
 scene: !include scenes.yaml
 
 recorder:
-  purge_keep_days: 30
+  purge_keep_days: 7
   commit_interval: 60
 
 sensor:
