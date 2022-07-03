@@ -55,4 +55,4 @@ services:
     volumes:
       - /home/minus/logs:/logs
     devices:
-      - '/dev/gpiomem:/dev/gpiomem'
+      - /dev/gpiomem
