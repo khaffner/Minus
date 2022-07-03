@@ -47,6 +47,7 @@ services:
   #################################################
   presence:
     restart: unless-stopped
+    privileged: true # GPIO
     environment:
       - TZ=Europe/Oslo
     build:
@@ -54,4 +55,3 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /home/minus/logs:/logs
-      - /sys:/sys # For GPIO
