@@ -1,0 +1,52 @@
+views:
+  - theme: Backend-selected
+    title: Minus
+    type: panel
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: gauge
+                entity: sensor.processor_use
+                name: CPU
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+              - type: gauge
+                entity: sensor.processor_temperature
+                name: CPU
+                min: 1
+                max: 75
+                severity:
+                  green: 20
+                  yellow: 60
+                  red: 70
+              - type: gauge
+                entity: sensor.memory_use_percent
+                name: RAM
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+              - type: gauge
+                entity: sensor.disk_use_percent
+                name: Disk
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: sensor.gps
+                icon: mdi:satellite-variant
+              - type: entity
+                entity: binary_sensor.internet
+                icon: mdi:wifi
+              - type: entity
+                entity: binary_sensor.rpi_power_status
+                name: Power
+                icon: mdi:power-plug
