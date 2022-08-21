@@ -1,11 +1,47 @@
 views:
   - theme: Backend-selected
-    title: Minus
+    title: Home
     type: panel
     badges: []
     cards:
       - type: vertical-stack
         cards:
+          - type: horizontal-stack
+            cards:
+              - type: entity-filter
+                entities:
+                  - person.kevin
+                  - person.heidi
+                  - person.dennis
+                  - person.julie
+                state_filter:
+                  - home
+                card:
+                  type: glance
+                  show_icon: false
+                  show_state: false
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.internet
+                state: "on"
+            card:
+              show_current: true
+              show_forecast: false
+              type: weather-forecast
+              entity: weather.home
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: sensor.gps
+                icon: mdi:satellite-variant
+              - type: conditional
+                conditions:
+                  - entity: binary_sensor.internet
+                    state: "on"
+                card:
+                  type: entity
+                  entity: sensor.local_ip
+                  name: IP
           - type: horizontal-stack
             cards:
               - type: gauge
@@ -38,15 +74,4 @@ views:
                   green: 0
                   yellow: 50
                   red: 75
-          - type: horizontal-stack
-            cards:
-              - type: entity
-                entity: sensor.gps
-                icon: mdi:satellite-variant
-              - type: entity
-                entity: binary_sensor.internet
-                icon: mdi:wifi
-              - type: entity
-                entity: binary_sensor.rpi_power_status
-                name: Power
-                icon: mdi:power-plug
+title: Minus

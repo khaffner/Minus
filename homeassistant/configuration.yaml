@@ -9,6 +9,11 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
+device_tracker:
+  - platform: bluetooth_tracker
+  - platform: bluetooth_le_tracker
+    track_new_devices: false
+
 recorder:
   purge_keep_days: 7
   commit_interval: 60
@@ -22,18 +27,6 @@ sensor:
       - type: swap_use_percent
       - type: processor_temperature
       - type: processor_use
-  - platform: command_line
-    name: "Dennis present"
-    command: "if find /logs/presence/*/Dennis.log -type f -mmin -1 &> /dev/null ; then echo true ; else echo false ; fi"
-  - platform: command_line
-    name: "Heidi present"
-    command: "if find /logs/presence/*/Heidi.log -type f -mmin -1 &> /dev/null ; then echo true ; else echo false ; fi"
-  - platform: command_line
-    name: "Julie present"
-    command: "if find /logs/presence/*/Julie.log -type f -mmin -1 &> /dev/null ; then echo true ; else echo false ; fi"
-  - platform: command_line
-    name: "Kevin present"
-    command: "if find /logs/presence/*/Kevin.log -type f -mmin -1 &> /dev/null ; then echo true ; else echo false ; fi"
 
 binary_sensor:
   - platform: ping

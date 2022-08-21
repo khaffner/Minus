@@ -45,14 +45,3 @@ services:
     volumes:
       - /home/minus/.config/rclone:/config/rclone # Must be configured on host
       - /home/minus/logs:/logs
-  #################################################
-  presence:
-    restart: unless-stopped
-    privileged: true # GPIO
-    environment:
-      - TZ=Europe/Oslo
-    build:
-      context: ./presence
-      dockerfile: Dockerfile
-    volumes:
-      - /home/minus/logs:/logs
