@@ -13,7 +13,7 @@ services:
       - /home/minus/logs/gps:/gps
   #################################################  
   homeassistant:
-    image: homeassistant/raspberrypi3-64-homeassistant:2022.8.1 # Must be full version on this image for some reason, not just year.month
+    image: homeassistant/raspberrypi3-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
     network_mode: host
     restart: unless-stopped
     environment:
