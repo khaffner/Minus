@@ -1,7 +1,20 @@
-FROM python:3-slim-bullseye
+# This image needs both pwsh and python3 because some things are better done in pwsh (:
+FROM mcr.microsoft.com/powershell:lts-7.2-debian-bullseye-slim
 
-RUN pip install obd
+SHELL ["/bin/sh", "-c"]
 
-COPY logger.py /app/logger.py
+RUN apt-get update
+RUN apt-get install python3 python3-pip -y
 
-ENTRYPOINT [ "python3", "/app/logger.py" ]
+RUN mkdir /logs
+WORKDIR /app
+
+ADD https://github.com/khaffner/triplet-bmu/archive/master.tar.gz triplet-bmu.tar.gz
+RUN tar xvfz triplet-bmu.tar.gz
+RUN rm triplet-bmu.tar.gz
+
+WORKDIR /app/triplet-bmu-master
+
+COPY logger.sh logger.sh
+
+ENTRYPOINT [ "sh", "logger.sh" ]

@@ -26,14 +26,14 @@ services:
   obd:
     restart: unless-stopped
     devices:
-      - '/dev/ttyAMA0:/dev/obd'
+      - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
     environment:
       - TZ=Europe/Oslo
     build:
       context: ./obd
       dockerfile: Dockerfile
     volumes:
-      - /home/minus/logs/obd:/obd
+      - /home/minus/logs/obd:/logs
   #################################################
   rclone:
     restart: unless-stopped
