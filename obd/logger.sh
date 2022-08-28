@@ -6,6 +6,6 @@ while true; do
     python3 csvdump.py
 
     # Convert data to json to help Home Assistant parse it
-    pwsh -Command "& {Import-Csv *.csv -Header Name,Value | ConvertTo-Json | Out-File /logs/dump.json} -Force"
+    pwsh -Command '& {$data = New-Object -TypeName psobject ; Import-Csv *.csv -Header Name,Value | foreach {$data | Add-Member -NotePropertyName $PSItem.Name -NotePropertyValue $PSItem.Value} ; $data | ConvertTo-Json | Out-File -Path /logs/dump.json -Force}'
     sleep 50
 done
