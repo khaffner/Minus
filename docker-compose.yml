@@ -2,6 +2,7 @@ version: '3'
 services:
   #################################################  
   gps:
+    container_name: gps
     restart: unless-stopped
     network_mode: host # couldn't pass just port 2947.. 
     environment:
@@ -11,19 +12,26 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /home/minus/logs/gps:/gps
+    networks:
+      - minusnet
   #################################################  
   homeassistant:
-    image: homeassistant/raspberrypi4-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
-    network_mode: host
+    container_name: homeassistant
     restart: unless-stopped
+    image: homeassistant/raspberrypi4-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
     environment:
       - TZ=Europe/Oslo
     volumes:
       - /home/minus/homeassistant_config:/config
       - /home/minus/logs:/logs
       - '/run/dbus:/run/dbus:ro'
+    ports:
+      - '8123:8123'
+    networks:
+      - minusnet
   #################################################
   obd:
+    container_name: obd
     restart: unless-stopped
     devices:
       - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
@@ -34,8 +42,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - /home/minus/logs/obd:/logs
+    networks:
+      - minusnet
   #################################################
   rclone:
+    container_name: rclone
     restart: unless-stopped
     environment:
       - TZ=Europe/Oslo
@@ -45,3 +56,27 @@ services:
     volumes:
       - /home/minus/.config/rclone:/config/rclone # Must be configured on host
       - /home/minus/logs:/logs
+    networks:
+      - minusnet
+  #################################################
+  code-server:
+    container_name: code-server
+    restart: unless-stopped
+    image: lscr.io/linuxserver/code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Oslo
+      - DEFAULT_WORKSPACE=/dockervolumes
+    ports:
+      - '8443:8443'
+    volumes:
+      - '/home/minus/homeassistant_config:/dockervolumes/homeassistant_config'
+      - '/home/minus/logs:/dockervolumes/logs'
+    networks:
+      - minusnet
+  #################################################
+
+networks:
+  minusnet:
+    driver: bridge
