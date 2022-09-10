@@ -1,11 +1,20 @@
+#!/bin/bash
+
+ODB="/dev/obd"
 while true; do
-    # Delete all old csv files
-    rm *.csv
+    if [ -f $OBD ]; then
+        # Delete all old csv files
+        rm *.csv
 
-    # Actually get the data from the car, gets saved as json
-    python3 csvdump.py
+        # Actually get the data from the car, gets saved as csv
+        python3 csvdump.py
 
-    # Convert data to json to help Home Assistant parse it
-    pwsh -Command '& {$data = New-Object -TypeName psobject ; Import-Csv *.csv -Header Name,Value | foreach {$data | Add-Member -NotePropertyName $PSItem.Name -NotePropertyValue $PSItem.Value} ; $data | ConvertTo-Json | Out-File -Path /logs/dump.json -Force}'
-    sleep 50
+        # Run pwsh script that loops the csv and posts to HA
+        pwsh -f HApost.ps1
+
+    else
+        echo "OBD disconnected"
+    fi
+
+    sleep 8
 done
