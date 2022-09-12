@@ -17,15 +17,15 @@ while ($true) {
         # Get the data, loop through the rows and post a sensor state for each data point
         Import-Csv *.csv -Header Name, Value | foreach -Parallel {
             Clear-Variable -Name body, name -ErrorAction SilentlyContinue
-            $body = @{"state" = $PSItem.Value }
+            $body = @{"state" = $PSItem.Value } | ConvertTo-Json -Compress
             $name = $PSItem.Name
             Write-Host "Posting $body to sensor $name"
-            Invoke-RestMethod -Uri "http://homeassistant.local:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
+            Invoke-RestMethod -Uri "http://homeassistant:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
         }
     }
     else {
         # Tell HA OBD is disconnected
-        Invoke-RestMethod -Uri "http://homeassistant.local:8123/api/states/sensor.OBD" -Method Post -Body @{"state" = "Disconnected" } -Headers $headers
+        Invoke-RestMethod -Uri "http://homeassistant:8123/api/states/sensor.OBD" -Method Post -Body (@{"state" = "Disconnected" } | ConvertTo-Json -Compress) -Headers $headers
     }
     Start-Sleep -Seconds 8
 }
