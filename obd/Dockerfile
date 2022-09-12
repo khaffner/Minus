@@ -1,5 +1,6 @@
 # This image needs both pwsh and python3 because some things are better done in pwsh (:
-FROM mcr.microsoft.com/powershell:lts-7.2-debian-bullseye-slim
+# At the time of writing, Powershell images do not support arm... but dotnet sdk does and has pwsh
+FROM mcr.microsoft.com/dotnet/sdk:6.0
 
 SHELL ["/bin/sh", "-c"]
 
