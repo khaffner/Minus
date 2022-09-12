@@ -34,8 +34,8 @@ services:
   obd:
     container_name: obd
     restart: unless-stopped
-    devices:
-      - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
+    #devices:
+    #  - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
     environment:
       - TZ=Europe/Oslo
     build:
