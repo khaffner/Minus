@@ -16,7 +16,6 @@ RUN rm triplet-bmu.tar.gz
 
 WORKDIR /app/triplet-bmu-master
 
-COPY logger.sh logger.sh
-COPY HApost.ps1 HApost.ps1
+COPY logger.ps1 logger.ps1
 
 ENTRYPOINT [ "pwsh", "logger.ps1" ]
