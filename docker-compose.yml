@@ -4,7 +4,8 @@ services:
   gps:
     container_name: gps
     restart: unless-stopped
-    network_mode: host # couldn't pass just port 2947.. 
+    ports:
+      - '2947'
     environment:
       - TZ=Europe/Oslo
     build:
