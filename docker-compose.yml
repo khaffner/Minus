@@ -40,8 +40,8 @@ services:
     build:
       context: ./obd
       dockerfile: Dockerfile
-    volumes:
-      - /home/minus/logs/obd:/logs
+    env_file:
+      - secrets.env
     networks:
       - minusnet
   #################################################
