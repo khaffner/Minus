@@ -13,8 +13,6 @@ services:
       - '/run/dbus:/run/dbus:ro'
     ports:
       - '8123:8123'
-    networks:
-      - minusnet
   #################################################
   obd:
     container_name: obd
@@ -28,8 +26,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - secrets.env
-    networks:
-      - minusnet
   #################################################
   rclone:
     container_name: rclone
@@ -42,8 +38,6 @@ services:
     volumes:
       - /home/minus/.config/rclone:/config/rclone # Must be configured on host
       - /home/minus/logs:/logs
-    networks:
-      - minusnet
   #################################################
   code-server:
     container_name: code-server
@@ -59,10 +53,4 @@ services:
     volumes:
       - '/home/minus/homeassistant_config:/dockervolumes/homeassistant_config'
       - '/home/minus/logs:/dockervolumes/logs'
-    networks:
-      - minusnet
   #################################################
-
-networks:
-  minusnet:
-    driver: bridge
