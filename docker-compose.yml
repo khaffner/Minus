@@ -4,7 +4,7 @@ services:
   homeassistant:
     container_name: homeassistant
     restart: unless-stopped
-    image: homeassistant/raspberrypi4-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
+    image: homeassistant/raspberrypi4-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
     environment:
       - TZ=Europe/Oslo
     volumes:
