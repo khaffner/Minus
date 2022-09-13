@@ -1,21 +1,6 @@
 version: '3'
 services:
   #################################################  
-  gps:
-    container_name: gps
-    restart: unless-stopped
-    ports:
-      - '2947'
-    environment:
-      - TZ=Europe/Oslo
-    build:
-      context: ./gps
-      dockerfile: Dockerfile
-    volumes:
-      - /home/minus/logs/gps:/gps
-    networks:
-      - minusnet
-  #################################################  
   homeassistant:
     container_name: homeassistant
     restart: unless-stopped
