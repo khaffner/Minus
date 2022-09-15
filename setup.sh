@@ -1,3 +1,5 @@
+# Raspberry Pi OS Bullseye 64-bit with desktop
+
 # Fix locale (select only en_US-UTF-8 UTF-8), patch
 sudo raspi-config
 sudo reboot
@@ -12,7 +14,8 @@ sudo apt-get install libffi-dev libssl-dev && sudo apt install python3-dev && su
 
 # GPSD
 sudo apt install gpsd -y
-# Remember to edit /etc/default/gpsd
+
+cat /etc/default/gpsd | sudo sed -i 's;DEVICES="";DEVICES="/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_D-if00-port0";' /etc/default/gpsd # Specifies what device is gps receiver
 
 # SWAP https://askubuntu.com/questions/103915/how-do-i-configure-swappiness
 sudo bash -c "echo 'vm.swappiness = 1' >> /etc/sysctl.conf"
@@ -20,6 +23,13 @@ sudo bash -c "echo 'vm.swappiness = 1' >> /etc/sysctl.conf"
 # Clone project repo, lowercase repo
 git clone https://github.com/khaffner/Minus.git
 mv Minus/ minus/
+
+# Configure Rclone, details in google doc
+
+# Configure secrets
+cd minus
+cp secrets.env.template secrets.env
+# and edit the content, instructions inside
 
 ######################################################### Examples for management
 
