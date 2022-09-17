@@ -35,6 +35,8 @@ services:
     build:
       context: ./rclone
       dockerfile: Dockerfile
+    env_file:
+      - secrets.env
     volumes:
       - /home/minus/.config/rclone:/config/rclone # Must be configured on host
       - /home/minus/logs:/logs
