@@ -12,7 +12,8 @@ services:
       - /home/minus/logs:/logs
       - '/run/dbus:/run/dbus:ro'
     ports:
-      - '8123:8123'
+      - '8123:8123' # HA web interface
+      - '2947:2947' # gpsd
   #################################################
   obd:
     container_name: obd
