@@ -20,12 +20,12 @@ while ($true) {
             $body = @{"state" = $PSItem.Value } | ConvertTo-Json -Compress
             $name = $PSItem.Name
             Write-Host "Posting $body to sensor $name"
-            Invoke-RestMethod -Uri "http://homeassistant:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
+            Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
         }
     }
     else {
         # Tell HA OBD is disconnected
-        Invoke-RestMethod -Uri "http://homeassistant:8123/api/states/sensor.OBD" -Method Post -Body (@{"state" = "Disconnected" } | ConvertTo-Json -Compress) -Headers $headers
+        Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD" -Method Post -Body (@{"state" = "Disconnected" } | ConvertTo-Json -Compress) -Headers $headers
     }
     Start-Sleep -Seconds 8
 }

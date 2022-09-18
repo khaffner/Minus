@@ -18,7 +18,7 @@ while true; do
     curl -X POST \
         -H "Authorization: Bearer ${HATOKEN}" \
         -H "Content-Type: application/json" \
-        http://homeassistant:8123/api/states/sensor.syncstatus \
+        http://localhost:8123/api/states/sensor.syncstatus \
         -d $json
 
     sleep 1m # 1 minute interval, regardless if offline or online

@@ -12,5 +12,5 @@ But long story short: Get OBD, GPS and bluetooth data, show them in Home Assista
 
 To upgrade and restart everything, run
 ```console
-cd minus && git pull && docker-compose pull &&  docker-compose up -d --build --force-recreate --remove-orphans && cd ~
+git pull && docker-compose pull &&  docker-compose up -d --build --force-recreate --remove-orphans
 ```

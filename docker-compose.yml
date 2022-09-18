@@ -5,20 +5,20 @@ services:
     container_name: homeassistant
     restart: unless-stopped
     image: homeassistant/raspberrypi4-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
+    network_mode: host
     environment:
       - TZ=Europe/Oslo
     volumes:
       - /home/minus/homeassistant_config:/config
       - /home/minus/logs:/logs
       - '/run/dbus:/run/dbus:ro'
-    ports:
-      - '8123:8123' # HA web interface
   #################################################
   obd:
     container_name: obd
     restart: unless-stopped
-    #devices:
-    #  - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
+    network_mode: host
+    devices:
+      - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
     environment:
       - TZ=Europe/Oslo
     build:
@@ -26,17 +26,6 @@ services:
       dockerfile: Dockerfile
     env_file:
       - secrets.env
-  #################################################
-  gps:
-    container_name: gps
-    restart: unless-stopped
-    devices:
-      - "/dev/serial/by-id/usb-Prolific_Technology_Inc._USB-Serial_Controller_D-if00-port0:/dev/gps"
-    environment:
-      - TZ=Europe/Oslo
-    build:
-      context: ./gps
-      dockerfile: Dockerfile
   #################################################
   rclone:
     container_name: rclone
@@ -56,13 +45,12 @@ services:
     container_name: code-server
     restart: unless-stopped
     image: lscr.io/linuxserver/code-server:4.7.0
+    network_mode: host
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Oslo
       - DEFAULT_WORKSPACE=/dockervolumes
-    ports:
-      - '8443:8443'
     volumes:
       - '/home/minus/homeassistant_config:/dockervolumes/homeassistant_config'
       - '/home/minus/logs:/dockervolumes/logs'
