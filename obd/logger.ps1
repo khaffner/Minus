@@ -17,8 +17,16 @@ while ($true) {
 
             # Get the data, loop through the rows and post a sensor state for each data point
             Import-Csv *.csv -Header Name, Value | foreach -Parallel {
-                Clear-Variable -Name body, name -ErrorAction SilentlyContinue
-                $body = @{"state" = $PSItem.Value } | ConvertTo-Json -Compress
+                Clear-Variable -Name body, name, value -ErrorAction SilentlyContinue
+                
+                # Some cleanup, as only a-z0-9_ is allowed
+                $Value = $PSItem.Value
+                $Value = $Value.ToLower() # Must be lowercase
+                $Value = $Value.Replace(' ', '_') # Spaces are not allowed, best replaced by underscore
+                $Value = $Value.Replace('/', 'per') # Slash is not allowed, in this data only means "per" as in kwh per 100km
+                $Value = $Value.Replace('%', 'percent') # Percantage symbol not allowed, in this data only means percent.
+
+                $body = @{"state" = $Value } | ConvertTo-Json -Compress
                 $name = $PSItem.Name
                 Write-Host "Posting $body to sensor $name"
                 Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
