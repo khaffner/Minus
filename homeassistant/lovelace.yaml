@@ -8,27 +8,57 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - type: entity-filter
-                entities:
-                  - person.kevin
-                  - person.heidi
-                  - person.dennis
-                  - person.julie
-                state_filter:
-                  - home
+              - type: conditional
+                conditions:
+                  - entity: sensor.gps
+                    state: 3D Fix
                 card:
-                  type: glance
-                  show_icon: false
-                  show_state: false
-          - type: conditional
-            conditions:
-              - entity: binary_sensor.internet
-                state: "on"
-            card:
-              show_current: true
-              show_forecast: false
-              type: weather-forecast
-              entity: weather.home
+                  type: entity
+                  entity: sensor.gps
+                  attribute: speed
+                  unit: km/h
+                  name: Speed
+                  icon: mdi:satellite-variant
+              - type: entity
+                entity: sensor.soc
+                name: SoC
+                icon: mdi:battery
+                unit: "%"
+                state_color: false
+          - type: horizontal-stack
+            cards:
+              - type: conditional
+                conditions:
+                  - entity: person.kevin
+                    state: home
+                card:
+                  type: markdown
+                  content: " "
+                  title: Kevin
+              - type: conditional
+                conditions:
+                  - entity: person.heidi
+                    state: home
+                card:
+                  type: markdown
+                  content: " "
+                  title: Heidi
+              - type: conditional
+                conditions:
+                  - entity: person.dennis
+                    state: home
+                card:
+                  type: markdown
+                  content: " "
+                  title: Dennis
+              - type: conditional
+                conditions:
+                  - entity: person.julie
+                    state: home
+                card:
+                  type: markdown
+                  content: " "
+                  title: Julie
           - type: horizontal-stack
             cards:
               - type: entity
