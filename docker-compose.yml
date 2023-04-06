@@ -4,14 +4,12 @@ services:
   homeassistant:
     container_name: homeassistant
     restart: unless-stopped
-    image: homeassistant/raspberrypi4-64-homeassistant:2022.8.6 # Must be full version on this image for some reason, not just year.month
+    image: homeassistant/raspberrypi4-64-homeassistant:2023.4.0 # Must be full version on this image for some reason, not just year.month
     network_mode: host
     environment:
       - TZ=Europe/Oslo
     volumes:
       - /home/minus/homeassistant_config:/config
-      - /home/minus/logs:/logs
-      - '/run/dbus:/run/dbus:ro'
   #################################################
   obd:
     container_name: obd
@@ -27,24 +25,10 @@ services:
     env_file:
       - secrets.env
   #################################################
-  rclone:
-    container_name: rclone
-    restart: unless-stopped
-    environment:
-      - TZ=Europe/Oslo
-    build:
-      context: ./rclone
-      dockerfile: Dockerfile
-    env_file:
-      - secrets.env
-    volumes:
-      - /home/minus/.config/rclone:/config/rclone # Must be configured on host
-      - /home/minus/logs:/logs
-  #################################################
   code-server:
     container_name: code-server
     restart: unless-stopped
-    image: lscr.io/linuxserver/code-server:4.7.0
+    image: lscr.io/linuxserver/code-server
     network_mode: host
     environment:
       - PUID=1000
@@ -53,5 +37,4 @@ services:
       - DEFAULT_WORKSPACE=/dockervolumes
     volumes:
       - '/home/minus/homeassistant_config:/dockervolumes/homeassistant_config'
-      - '/home/minus/logs:/dockervolumes/logs'
   #################################################

@@ -8,7 +8,7 @@ This repo contains code and config for the Raspberry Pi 4B in our Mitsubishi i-M
 Mostly containerized, some parts run locally.
 
 Most documentation is in a private google doc.
-But long story short: Get OBD, GPS and bluetooth data, show them in Home Assistant on car radio display and sync them to a folder in Google Drive.
+But long story short: Get OBD, GPS and bluetooth data, show them in Home Assistant on car radio display.
 
 To upgrade and restart everything, run
 ```console

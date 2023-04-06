@@ -9,13 +9,8 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
 
-device_tracker:
-  - platform: bluetooth_tracker
-  - platform: bluetooth_le_tracker
-    track_new_devices: false
-
 recorder:
-  purge_keep_days: 7
+  purge_keep_days: 90
   commit_interval: 60
 
 sensor:
@@ -28,9 +23,3 @@ sensor:
       - type: processor_temperature
       - type: processor_use
 
-binary_sensor:
-  - platform: ping
-    host: 8.8.8.8
-    name: "Internet"
-    count: 4
-    scan_interval: 10
