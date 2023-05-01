@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     network_mode: host
     devices:
-      - '/dev/serial/by-id/usb-ScanTool.net_LLC_OBDLink_SX_113011164450-if00-port0:/dev/obd'
+      - '/dev/serial/by-path/platform-fd500000.pcie-pci-0000:01:00.0-usb-0:1.1:1.0-port0:/dev/obd'
     environment:
       - TZ=Europe/Oslo
     build:
