@@ -8,8 +8,8 @@ $headers = @{
 while ($true) {
     # Only run if OBD is connected
     if (Test-Path -Path "/dev/obd") {
-        # Tell HA OBD is online
-        Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD" -Method Post -Body @{"state" = "Connected" } -Headers $headers
+        # Tell HA OBD is online. Silence output to keep out of docker log
+        Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD_status" -Method Post -Body (@{"state" = "Connected" } | ConvertTo-Json -Compress) -Headers $headers | Out-Null
 
         try {
             # Actually get the data from the car, store it as local csv file. https://github.com/khaffner/triplet-bmu
@@ -28,17 +28,17 @@ while ($true) {
 
                 $body = @{"state" = $Value } | ConvertTo-Json -Compress
                 $name = $PSItem.Name
-                Write-Host "Posting $body to sensor $name"
-                Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.$name" -Method Post -Body $body -Headers $headers
+                Write-Host "Posting $Value to sensor $name"
+                Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.obd_$name" -Method Post -Body $body -Headers $headers | Out-Null
             }
         }
         catch {
-            Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD" -Method Post -Body (@{"state" = "Error" } | ConvertTo-Json -Compress) -Headers $headers
+            Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD_status" -Method Post -Body (@{"state" = "Error" } | ConvertTo-Json -Compress) -Headers $headers
         }
     }
     else {
         # Tell HA OBD is disconnected
-        Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD" -Method Post -Body (@{"state" = "Disconnected" } | ConvertTo-Json -Compress) -Headers $headers
+        Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD_status" -Method Post -Body (@{"state" = "Disconnected" } | ConvertTo-Json -Compress) -Headers $headers
     }
     Start-Sleep -Seconds 8
 }
