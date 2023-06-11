@@ -13,7 +13,7 @@ while ($true) {
 
         try {
             # Actually get the data from the car, store it as local csv file. https://github.com/BITPlan/can4eve/blob/master/obdii/src/main/java/com/bitplan/obdii/OBDMain.java#L113
-            java -jar can4eve.jar --report report.csv
+            java -jar can4eve.jar --conn /dev/obd --baud 500000 --report report.csv
 
             # Get the data, loop through the rows and post a sensor state for each data point
             Import-Csv *.csv -Header Name, Value | foreach -Parallel {
