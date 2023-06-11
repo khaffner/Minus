@@ -1,21 +1,14 @@
 # This image needs both pwsh and python3 because some things are better done in pwsh (:
 # At the time of writing, Powershell images do not support arm... but dotnet sdk does and has pwsh
-FROM mcr.microsoft.com/dotnet/sdk:6.0
+FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine
 
 SHELL ["/bin/sh", "-c"]
 
-RUN apt-get update
-RUN apt-get install python3 python3-pip -y
-RUN pip3 install pyserial
-RUN mkdir /logs
+RUN apk update update
+RUN apk add --no-cache openjdk8
+
 WORKDIR /app
-
-ADD https://github.com/khaffner/triplet-bmu/archive/master.tar.gz triplet-bmu.tar.gz
-RUN tar xvfz triplet-bmu.tar.gz
-RUN rm triplet-bmu.tar.gz
-
-WORKDIR /app/triplet-bmu-master
-
+ADD https://github.com/BITPlan/can4eve/raw/3a27a630f7b23d609ea92aa46ab006a58c08994c/obdii/release/can4eve.jar can4eve.jar
 COPY logger.ps1 logger.ps1
 
-ENTRYPOINT [ "pwsh", "logger.ps1" ]
+#ENTRYPOINT [ "pwsh", "logger.ps1" ]

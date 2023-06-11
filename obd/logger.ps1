@@ -12,8 +12,8 @@ while ($true) {
         Invoke-RestMethod -Uri "http://localhost:8123/api/states/sensor.OBD_status" -Method Post -Body (@{"state" = "Connected" } | ConvertTo-Json -Compress) -Headers $headers | Out-Null
 
         try {
-            # Actually get the data from the car, store it as local csv file. https://github.com/khaffner/triplet-bmu
-            python3 csvdump.py
+            # Actually get the data from the car, store it as local csv file. https://github.com/BITPlan/can4eve/blob/master/obdii/src/main/java/com/bitplan/obdii/OBDMain.java#L113
+            java -jar can4eve.jar --report report.csv
 
             # Get the data, loop through the rows and post a sensor state for each data point
             Import-Csv *.csv -Header Name, Value | foreach -Parallel {
